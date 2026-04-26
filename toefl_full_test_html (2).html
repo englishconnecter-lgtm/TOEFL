@@ -1,0 +1,805 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full TOEFL Practice Test</title>
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #d1d5db;
+      --accent: #2563eb;
+      --accent-dark: #1d4ed8;
+      --danger: #dc2626;
+      --success: #16a34a;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    h1 {
+      margin: 0;
+      font-size: 24px;
+    }
+
+    .timer-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    #timer {
+      background: white;
+      color: #111827;
+      padding: 8px 14px;
+      border-radius: 8px;
+      min-width: 95px;
+      text-align: center;
+    }
+
+    nav {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 84px;
+      z-index: 9;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 8px;
+      padding: 10px 20px;
+      overflow-x: auto;
+    }
+
+    nav button,
+    .main-button,
+    .secondary-button,
+    .danger-button {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    nav button {
+      background: #e5e7eb;
+      color: #111827;
+      white-space: nowrap;
+    }
+
+    nav button.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    .main-button {
+      background: var(--accent);
+      color: white;
+    }
+
+    .main-button:hover {
+      background: var(--accent-dark);
+    }
+
+    .secondary-button {
+      background: #e5e7eb;
+      color: #111827;
+    }
+
+    .danger-button {
+      background: var(--danger);
+      color: white;
+    }
+
+    main {
+      max-width: 1200px;
+      margin: 24px auto;
+      padding: 0 20px 60px;
+    }
+
+    .section {
+      display: none;
+      background: var(--card);
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(15,23,42,0.08);
+      margin-bottom: 24px;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: #111827;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    h3 {
+      margin-top: 28px;
+      color: #1f2937;
+    }
+
+    .instructions {
+      background: #eff6ff;
+      border-left: 5px solid var(--accent);
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 16px 0 24px;
+    }
+
+    .passage,
+    .lecture,
+    .prompt-box {
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      padding: 18px;
+      border-radius: 10px;
+      margin: 16px 0;
+    }
+
+    .question {
+      border-top: 1px solid var(--border);
+      padding: 18px 0;
+    }
+
+    .question:first-of-type {
+      border-top: none;
+    }
+
+    .question p {
+      font-weight: bold;
+      margin-bottom: 10px;
+    }
+
+    label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+
+    input[type="text"],
+    textarea,
+    select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 15px;
+      font-family: inherit;
+      margin-top: 6px;
+    }
+
+    textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 24px 0;
+    }
+
+    .score-card {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .score-item {
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 10px;
+    }
+
+    .score-item strong {
+      font-size: 22px;
+      color: var(--accent);
+    }
+
+    .warning {
+      color: var(--danger);
+      font-weight: bold;
+    }
+
+    .success {
+      color: var(--success);
+      font-weight: bold;
+    }
+
+    .small-note {
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 800px) {
+      nav {
+        top: 120px;
+      }
+
+      .two-column {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>Full TOEFL Practice Test</h1>
+      <div class="timer-box">
+        <span>Time Left:</span>
+        <span id="timer">120:00</span>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-inner">
+      <button class="tab active" onclick="showSection('overview', this)">Overview</button>
+      <button class="tab" onclick="showSection('reading', this)">Reading</button>
+      <button class="tab" onclick="showSection('listening', this)">Listening</button>
+      <button class="tab" onclick="showSection('speaking', this)">Speaking</button>
+      <button class="tab" onclick="showSection('writing', this)">Writing</button>
+      <button class="tab" onclick="showSection('results', this)">Results</button>
+    </div>
+  </nav>
+
+  <main>
+    <section id="overview" class="section active">
+      <h2>Test Overview</h2>
+      <div class="instructions">
+        This is a complete TOEFL-style practice test. It includes Reading, Listening, Speaking, and Writing sections. The timer starts automatically. Use the reset button to clear all answers and restart the timer.
+      </div>
+
+      <h3>Sections</h3>
+      <p><strong>Reading:</strong> 2 academic passages with multiple-choice questions.</p>
+      <p><strong>Listening:</strong> 2 lecture/conversation transcripts with comprehension questions.</p>
+      <p><strong>Speaking:</strong> 4 TOEFL-style speaking tasks with preparation and response guidance.</p>
+      <p><strong>Writing:</strong> 2 TOEFL-style writing tasks: integrated and academic discussion.</p>
+
+      <div class="controls">
+        <button class="main-button" onclick="goToReading()">Start Test</button>
+        <button class="danger-button" onclick="resetTest()">Reset Test</button>
+      </div>
+
+      <p class="small-note">Note: This HTML test automatically scores only the objective Reading and Listening questions. Speaking and Writing responses require teacher, peer, or AI evaluation.</p>
+    </section>
+
+    <section id="reading" class="section">
+      <h2>Reading Section</h2>
+      <div class="instructions">
+        Read each passage carefully and answer the questions. Choose the best answer for each question.
+      </div>
+
+      <h3>Passage 1: The Rise of Urban Agriculture</h3>
+      <div class="passage">
+        <p>Urban agriculture, the practice of growing food within cities, has become increasingly popular in recent decades. While farming is usually associated with rural areas, many city residents now cultivate vegetables, herbs, and fruits on rooftops, balconies, vacant lots, and community gardens. This movement has developed partly in response to concerns about food security, environmental sustainability, and the desire for stronger community ties.</p>
+        <p>One important benefit of urban agriculture is that it can reduce the distance food travels before reaching consumers. In conventional food systems, produce may be transported hundreds or even thousands of kilometers. This transportation requires fuel and contributes to greenhouse gas emissions. Locally grown food, by contrast, can often be consumed shortly after harvesting, reducing both transportation costs and environmental impact.</p>
+        <p>Urban agriculture also provides social benefits. Community gardens can transform unused or neglected land into productive public spaces. Residents who participate in these gardens often develop stronger relationships with their neighbors. In addition, gardening can provide educational opportunities for children and adults who may have little direct experience with food production.</p>
+        <p>However, urban agriculture faces several challenges. Soil in cities may be contaminated by heavy metals or industrial waste, making some locations unsafe for growing food. Water access can also be limited, and land in cities is often expensive. Despite these difficulties, supporters argue that urban agriculture can play an important role in creating healthier and more resilient cities.</p>
+      </div>
+
+      <div class="question">
+        <p>1. What is the main idea of the passage?</p>
+        <label><input type="radio" name="r1" value="A"> Urban agriculture is replacing traditional rural farming.</label>
+        <label><input type="radio" name="r1" value="B"> Urban agriculture offers benefits but also faces challenges.</label>
+        <label><input type="radio" name="r1" value="C"> Community gardens are mainly used by children.</label>
+        <label><input type="radio" name="r1" value="D"> City soil is always too dangerous for agriculture.</label>
+      </div>
+
+      <div class="question">
+        <p>2. According to the passage, locally grown food can help reduce...</p>
+        <label><input type="radio" name="r2" value="A"> the number of community gardens.</label>
+        <label><input type="radio" name="r2" value="B"> transportation-related environmental impact.</label>
+        <label><input type="radio" name="r2" value="C"> the need for vegetables.</label>
+        <label><input type="radio" name="r2" value="D"> educational opportunities.</label>
+      </div>
+
+      <div class="question">
+        <p>3. The word "neglected" in paragraph 3 is closest in meaning to...</p>
+        <label><input type="radio" name="r3" value="A"> ignored.</label>
+        <label><input type="radio" name="r3" value="B"> protected.</label>
+        <label><input type="radio" name="r3" value="C"> expensive.</label>
+        <label><input type="radio" name="r3" value="D"> crowded.</label>
+      </div>
+
+      <div class="question">
+        <p>4. Which of the following is mentioned as a challenge for urban agriculture?</p>
+        <label><input type="radio" name="r4" value="A"> Too much available land.</label>
+        <label><input type="radio" name="r4" value="B"> Lack of interest from residents.</label>
+        <label><input type="radio" name="r4" value="C"> Possible soil contamination.</label>
+        <label><input type="radio" name="r4" value="D"> Excessive food production.</label>
+      </div>
+
+      <h3>Passage 2: The Development of Written Language</h3>
+      <div class="passage">
+        <p>Writing systems are among the most significant inventions in human history. Before writing, information had to be passed from one person to another through speech and memory. Although oral traditions can preserve stories and knowledge for generations, they are vulnerable to changes over time. Writing allowed societies to record laws, economic transactions, religious texts, and historical events with greater permanence.</p>
+        <p>The earliest known writing systems appeared in ancient Mesopotamia and Egypt. In Mesopotamia, cuneiform developed from simple marks used to count goods such as grain and livestock. Over time, these marks became more complex and began to represent sounds and ideas. In Egypt, hieroglyphic writing combined pictures, symbols, and phonetic elements.</p>
+        <p>Writing changed the organization of societies. Governments could maintain records, collect taxes, and communicate across long distances. Merchants could document agreements and inventories. Religious leaders could preserve sacred texts. As a result, writing became closely connected with power, administration, and cultural identity.</p>
+        <p>Nevertheless, literacy was limited in many early societies. Learning to write required specialized training, and scribes often held respected positions. Only later, with the development of simpler alphabets and eventually printing technology, did literacy become more widespread.</p>
+      </div>
+
+      <div class="question">
+        <p>5. Why does the author mention oral traditions?</p>
+        <label><input type="radio" name="r5" value="A"> To explain why writing was unnecessary.</label>
+        <label><input type="radio" name="r5" value="B"> To contrast spoken memory with written records.</label>
+        <label><input type="radio" name="r5" value="C"> To show that ancient people had no culture.</label>
+        <label><input type="radio" name="r5" value="D"> To argue that speech is more permanent than writing.</label>
+      </div>
+
+      <div class="question">
+        <p>6. Cuneiform originally developed from marks used to...</p>
+        <label><input type="radio" name="r6" value="A"> decorate buildings.</label>
+        <label><input type="radio" name="r6" value="B"> count goods.</label>
+        <label><input type="radio" name="r6" value="C"> write poetry.</label>
+        <label><input type="radio" name="r6" value="D"> teach children.</label>
+      </div>
+
+      <div class="question">
+        <p>7. According to the passage, writing helped governments by allowing them to...</p>
+        <label><input type="radio" name="r7" value="A"> eliminate taxes.</label>
+        <label><input type="radio" name="r7" value="B"> avoid communication.</label>
+        <label><input type="radio" name="r7" value="C"> maintain records and communicate over distance.</label>
+        <label><input type="radio" name="r7" value="D"> make all citizens scribes.</label>
+      </div>
+
+      <div class="question">
+        <p>8. The passage suggests that scribes were respected because...</p>
+        <label><input type="radio" name="r8" value="A"> writing required specialized training.</label>
+        <label><input type="radio" name="r8" value="B"> everyone could write easily.</label>
+        <label><input type="radio" name="r8" value="C"> they invented printing technology.</label>
+        <label><input type="radio" name="r8" value="D"> they opposed written records.</label>
+      </div>
+    </section>
+
+    <section id="listening" class="section">
+      <h2>Listening Section</h2>
+      <div class="instructions">
+        In a real TOEFL test, you would listen to audio. In this HTML practice version, read the transcript as if it were the audio and answer the questions.
+      </div>
+
+      <h3>Listening 1: Campus Conversation</h3>
+      <div class="prompt-box">
+        <p><strong>Audio file:</strong> listening1.mp3</p>
+        <audio controls preload="none">
+          <source src="listening1.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+        <p class="small-note">Place a file named <strong>listening1.mp3</strong> in the same folder as this HTML file.</p>
+      </div>
+      <div class="lecture">
+        <p><strong>Student:</strong> Hi, I’m here because I received an email saying my library book is overdue, but I’m sure I returned it last week.</p>
+        <p><strong>Librarian:</strong> Let me check your account. What’s your student ID?</p>
+        <p><strong>Student:</strong> It’s 472916.</p>
+        <p><strong>Librarian:</strong> Thank you. I see the book listed as overdue, but it may not have been scanned properly when it was returned. Do you remember where you placed it?</p>
+        <p><strong>Student:</strong> I put it in the return box outside the library entrance on Friday evening.</p>
+        <p><strong>Librarian:</strong> That explains it. Sometimes books returned after closing are not processed until Monday. I’ll check the return cart and remove the fine if the book is there.</p>
+        <p><strong>Student:</strong> Great. I was worried I’d have to pay for it.</p>
+        <p><strong>Librarian:</strong> No problem. Check your account tomorrow. If the fine is still there, come back and ask for me.</p>
+      </div>
+
+      <div class="question">
+        <p>9. Why does the student visit the library?</p>
+        <label><input type="radio" name="l1" value="A"> To borrow a new book.</label>
+        <label><input type="radio" name="l1" value="B"> To ask about an overdue notice.</label>
+        <label><input type="radio" name="l1" value="C"> To apply for a library job.</label>
+        <label><input type="radio" name="l1" value="D"> To pay a fine immediately.</label>
+      </div>
+
+      <div class="question">
+        <p>10. What probably happened to the book?</p>
+        <label><input type="radio" name="l2" value="A"> It was lost by the student.</label>
+        <label><input type="radio" name="l2" value="B"> It was damaged.</label>
+        <label><input type="radio" name="l2" value="C"> It was returned but not processed yet.</label>
+        <label><input type="radio" name="l2" value="D"> It was checked out by another student.</label>
+      </div>
+
+      <div class="question">
+        <p>11. What does the librarian say she will do?</p>
+        <label><input type="radio" name="l3" value="A"> Buy a replacement copy.</label>
+        <label><input type="radio" name="l3" value="B"> Check the return cart and remove the fine if appropriate.</label>
+        <label><input type="radio" name="l3" value="C"> Close the student’s account.</label>
+        <label><input type="radio" name="l3" value="D"> Ask the student to return the book again.</label>
+      </div>
+
+      <h3>Listening 2: Biology Lecture</h3>
+      <div class="prompt-box">
+        <p><strong>Audio file:</strong> listening2.mp3</p>
+        <audio controls preload="none">
+          <source src="listening2.mp3" type="audio/mpeg">
+          Your browser does not support the audio element.
+        </audio>
+        <p class="small-note">Place a file named <strong>listening2.mp3</strong> in the same folder as this HTML file.</p>
+      </div>
+      <div class="lecture">
+        <p>Today we’ll discuss pollination, a process essential to the reproduction of many flowering plants. Pollination occurs when pollen is transferred from the male part of a flower to the female part. This transfer can happen in several ways, including wind, water, and animals.</p>
+        <p>Animal pollinators are especially important. Bees, butterflies, birds, and even bats visit flowers to feed on nectar. As they move from flower to flower, pollen sticks to their bodies and is carried to other plants. This process allows plants to produce seeds and fruit.</p>
+        <p>Some plants have evolved specific features to attract certain pollinators. For example, brightly colored flowers often attract insects, while flowers that open at night and produce strong scents may attract bats or moths. The relationship between plants and pollinators is often mutually beneficial: the animal receives food, and the plant achieves reproduction.</p>
+        <p>However, pollinator populations are threatened by habitat loss, pesticide use, disease, and climate change. A decline in pollinators can affect not only wild plants but also agricultural crops that humans rely on for food.</p>
+      </div>
+
+      <div class="question">
+        <p>12. What is the lecture mainly about?</p>
+        <label><input type="radio" name="l4" value="A"> The structure of animal wings.</label>
+        <label><input type="radio" name="l4" value="B"> The role and importance of pollination.</label>
+        <label><input type="radio" name="l4" value="C"> The history of farming tools.</label>
+        <label><input type="radio" name="l4" value="D"> The chemical composition of nectar.</label>
+      </div>
+
+      <div class="question">
+        <p>13. Why do animals visit flowers?</p>
+        <label><input type="radio" name="l5" value="A"> To hide from predators.</label>
+        <label><input type="radio" name="l5" value="B"> To collect soil.</label>
+        <label><input type="radio" name="l5" value="C"> To feed on nectar.</label>
+        <label><input type="radio" name="l5" value="D"> To build nests.</label>
+      </div>
+
+      <div class="question">
+        <p>14. According to the lecture, flowers that open at night may attract...</p>
+        <label><input type="radio" name="l6" value="A"> bats or moths.</label>
+        <label><input type="radio" name="l6" value="B"> fish.</label>
+        <label><input type="radio" name="l6" value="C"> large mammals only.</label>
+        <label><input type="radio" name="l6" value="D"> earthworms.</label>
+      </div>
+
+      <div class="question">
+        <p>15. Which of the following is mentioned as a threat to pollinators?</p>
+        <label><input type="radio" name="l7" value="A"> Too many flowers.</label>
+        <label><input type="radio" name="l7" value="B"> Habitat loss.</label>
+        <label><input type="radio" name="l7" value="C"> Lack of sunlight in all regions.</label>
+        <label><input type="radio" name="l7" value="D"> Excessive seed production.</label>
+      </div>
+    </section>
+
+    <section id="speaking" class="section">
+      <h2>Speaking Section</h2>
+      <div class="instructions">
+        For each task, prepare your answer and then speak aloud. You may type notes or a transcript of your response in the boxes provided.
+      </div>
+
+      <div class="prompt-box">
+        <h3>Speaking Task 1: Independent Speaking</h3>
+        <p>Some students prefer to study alone, while others prefer to study with classmates. Which do you prefer and why? Use details and examples to support your answer.</p>
+        <p class="small-note">Preparation: 15 seconds. Response: 45 seconds.</p>
+        <textarea name="s1" placeholder="Type notes or your spoken response here..."></textarea>
+      </div>
+
+      <div class="prompt-box">
+        <h3>Speaking Task 2: Campus Announcement</h3>
+        <p><strong>Reading:</strong> The university plans to extend library hours during final exam week. The library will remain open until 2:00 a.m. from Monday to Friday. The administration says this change will give students more time to study in a quiet environment.</p>
+        <p><strong>Listening Transcript:</strong> A student agrees with the change. She says the dormitories are often noisy at night, so students need a quiet place to study. She also says many students have part-time jobs during the day, so later library hours will help them study after work.</p>
+        <p><strong>Prompt:</strong> Explain the university’s plan and the student’s opinion about it.</p>
+        <p class="small-note">Preparation: 30 seconds. Response: 60 seconds.</p>
+        <textarea name="s2" placeholder="Type notes or your spoken response here..."></textarea>
+      </div>
+
+      <div class="prompt-box">
+        <h3>Speaking Task 3: Academic Concept</h3>
+        <p><strong>Reading:</strong> In psychology, positive reinforcement occurs when a desirable reward is given after a behavior, making that behavior more likely to happen again.</p>
+        <p><strong>Listening Transcript:</strong> A professor gives an example of a teacher who praises students when they participate in class. Because the students enjoy being praised, they become more willing to answer questions in future lessons.</p>
+        <p><strong>Prompt:</strong> Explain positive reinforcement using the example from the lecture.</p>
+        <p class="small-note">Preparation: 30 seconds. Response: 60 seconds.</p>
+        <textarea name="s3" placeholder="Type notes or your spoken response here..."></textarea>
+      </div>
+
+      <div class="prompt-box">
+        <h3>Speaking Task 4: Academic Lecture</h3>
+        <p><strong>Listening Transcript:</strong> A professor explains that animals use camouflage in two main ways. First, some animals blend into their surroundings, such as insects that look like leaves. This helps them avoid predators. Second, predators may use camouflage to approach prey without being noticed. For example, a tiger’s stripes help it hide in tall grass while hunting.</p>
+        <p><strong>Prompt:</strong> Explain the two ways animals use camouflage, using examples from the lecture.</p>
+        <p class="small-note">Preparation: 20 seconds. Response: 60 seconds.</p>
+        <textarea name="s4" placeholder="Type notes or your spoken response here..."></textarea>
+      </div>
+    </section>
+
+    <section id="writing" class="section">
+      <h2>Writing Section</h2>
+      <div class="instructions">
+        Complete both writing tasks. Your answers are saved locally while the page is open.
+      </div>
+
+      <h3>Writing Task 1: Integrated Writing</h3>
+      <div class="two-column">
+        <div class="prompt-box">
+          <h4>Reading Passage</h4>
+          <p>Some experts argue that online university courses are less effective than traditional classroom courses. First, they claim that online students receive less direct interaction with professors. Second, they believe online courses make it easier for students to become distracted. Third, they argue that employers may not value online degrees as highly as traditional degrees.</p>
+        </div>
+        <div class="prompt-box">
+          <h4>Listening Transcript</h4>
+          <p>The professor challenges these claims. She explains that many online courses include live video meetings and discussion forums, which can increase interaction. She also says that classroom students can become distracted too, and online students often develop stronger time-management skills. Finally, she notes that many respected universities now offer online programs, so employers are becoming more accepting of online degrees.</p>
+        </div>
+      </div>
+      <p><strong>Prompt:</strong> Summarize the points made in the lecture, explaining how they challenge the points made in the reading passage.</p>
+      <textarea name="w1" placeholder="Write your integrated response here..."></textarea>
+
+      <h3>Writing Task 2: Academic Discussion</h3>
+      <div class="prompt-box">
+        <p><strong>Professor:</strong> This week, we are discussing whether universities should require all students to take courses outside their major. Some people believe this creates well-rounded graduates, while others think students should focus only on their chosen field. What is your opinion?</p>
+        <p><strong>Student A:</strong> I think students should take courses outside their major because it helps them discover new interests and develop different skills.</p>
+        <p><strong>Student B:</strong> I disagree. University is expensive, so students should spend their time and money on classes that directly prepare them for their careers.</p>
+      </div>
+      <p><strong>Prompt:</strong> Write a response to the professor’s question. Express and support your opinion, contributing to the discussion.</p>
+      <textarea name="w2" placeholder="Write your academic discussion response here..."></textarea>
+    </section>
+
+    <section id="results" class="section">
+      <h2>Results</h2>
+      <div class="instructions">
+        Click the button below to calculate your Reading and Listening score. Speaking and Writing are not automatically scored.
+      </div>
+
+      <div class="controls">
+        <button class="main-button" onclick="calculateScore()">Calculate Score</button>
+        <button class="danger-button" onclick="resetTest()">Reset Test</button>
+      </div>
+
+      <div id="scoreOutput" class="score-card"></div>
+
+      <h3>Speaking Self-Assessment Guide</h3>
+      <p>Rate each speaking response from 0 to 4.</p>
+      <p><strong>4:</strong> Clear, organized, fluent, accurate, and fully answers the prompt.</p>
+      <p><strong>3:</strong> Mostly clear and complete, with some hesitation or minor language errors.</p>
+      <p><strong>2:</strong> Understandable but limited, with weak organization or frequent errors.</p>
+      <p><strong>1:</strong> Very limited response with serious problems in clarity or development.</p>
+      <p><strong>0:</strong> No relevant response.</p>
+
+      <h3>Writing Self-Assessment Guide</h3>
+      <p>Rate each writing response from 0 to 5.</p>
+      <p><strong>5:</strong> Well organized, fully developed, accurate, and directly answers the task.</p>
+      <p><strong>4:</strong> Good response with minor weaknesses in development or language.</p>
+      <p><strong>3:</strong> Adequate response but may be general, unclear, or contain noticeable errors.</p>
+      <p><strong>2:</strong> Limited development and frequent language problems.</p>
+      <p><strong>1:</strong> Very weak response with little relevant content.</p>
+      <p><strong>0:</strong> No relevant response.</p>
+    </section>
+  </main>
+
+  <script>
+    const TOTAL_TIME = 120 * 60;
+    let timeLeft = TOTAL_TIME;
+    let timerInterval;
+
+    const answerKey = {
+      r1: "B",
+      r2: "B",
+      r3: "A",
+      r4: "C",
+      r5: "B",
+      r6: "B",
+      r7: "C",
+      r8: "A",
+      l1: "B",
+      l2: "C",
+      l3: "B",
+      l4: "B",
+      l5: "C",
+      l6: "A",
+      l7: "B"
+    };
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          document.getElementById("timer").textContent = "00:00";
+          alert("Time is up. Your test has ended.");
+          calculateScore();
+          showSection('results', document.querySelector('button[onclick*="results"]'));
+          return;
+        }
+
+        timeLeft--;
+        updateTimerDisplay();
+        localStorage.setItem("toeflTimeLeft", timeLeft);
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById("timer").textContent =
+        String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
+
+      if (timeLeft <= 300) {
+        document.getElementById("timer").style.color = "#dc2626";
+      } else {
+        document.getElementById("timer").style.color = "#111827";
+      }
+    }
+
+    function showSection(sectionId, button) {
+      document.querySelectorAll(".section").forEach(section => {
+        section.classList.remove("active");
+      });
+      document.getElementById(sectionId).classList.add("active");
+
+      document.querySelectorAll(".tab").forEach(tab => {
+        tab.classList.remove("active");
+      });
+      if (button) button.classList.add("active");
+
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function goToReading() {
+      const readingButton = Array.from(document.querySelectorAll(".tab")).find(btn => btn.textContent === "Reading");
+      showSection("reading", readingButton);
+    }
+
+    function calculateScore() {
+      let readingCorrect = 0;
+      let listeningCorrect = 0;
+      let readingTotal = 8;
+      let listeningTotal = 7;
+
+      Object.keys(answerKey).forEach(name => {
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        if (selected && selected.value === answerKey[name]) {
+          if (name.startsWith("r")) readingCorrect++;
+          if (name.startsWith("l")) listeningCorrect++;
+        }
+      });
+
+      const objectiveCorrect = readingCorrect + listeningCorrect;
+      const objectiveTotal = readingTotal + listeningTotal;
+      const percentage = Math.round((objectiveCorrect / objectiveTotal) * 100);
+
+      const estimatedReading = Math.round((readingCorrect / readingTotal) * 30);
+      const estimatedListening = Math.round((listeningCorrect / listeningTotal) * 30);
+
+      const speakingWords = getWordCount(["s1", "s2", "s3", "s4"]);
+      const writingWords = getWordCount(["w1", "w2"]);
+
+      document.getElementById("scoreOutput").innerHTML = `
+        <div class="score-item">
+          <p>Reading Correct</p>
+          <strong>${readingCorrect}/${readingTotal}</strong>
+          <p class="small-note">Estimated TOEFL Reading: ${estimatedReading}/30</p>
+        </div>
+        <div class="score-item">
+          <p>Listening Correct</p>
+          <strong>${listeningCorrect}/${listeningTotal}</strong>
+          <p class="small-note">Estimated TOEFL Listening: ${estimatedListening}/30</p>
+        </div>
+        <div class="score-item">
+          <p>Objective Score</p>
+          <strong>${objectiveCorrect}/${objectiveTotal}</strong>
+          <p class="small-note">${percentage}% correct</p>
+        </div>
+        <div class="score-item">
+          <p>Speaking Response Words</p>
+          <strong>${speakingWords}</strong>
+          <p class="small-note">Speaking needs human or AI evaluation.</p>
+        </div>
+        <div class="score-item">
+          <p>Writing Response Words</p>
+          <strong>${writingWords}</strong>
+          <p class="small-note">Writing needs human or AI evaluation.</p>
+        </div>
+      `;
+    }
+
+    function getWordCount(names) {
+      let total = 0;
+      names.forEach(name => {
+        const field = document.querySelector(`[name="${name}"]`);
+        if (field && field.value.trim()) {
+          total += field.value.trim().split(/\s+/).length;
+        }
+      });
+      return total;
+    }
+
+    function saveAnswers() {
+      const data = {};
+
+      document.querySelectorAll("input[type='radio']").forEach(input => {
+        if (input.checked) data[input.name] = input.value;
+      });
+
+      document.querySelectorAll("textarea").forEach(textarea => {
+        data[textarea.name] = textarea.value;
+      });
+
+      localStorage.setItem("toeflAnswers", JSON.stringify(data));
+    }
+
+    function loadAnswers() {
+      const saved = JSON.parse(localStorage.getItem("toeflAnswers") || "{}");
+
+      Object.keys(saved).forEach(name => {
+        const radio = document.querySelector(`input[name="${name}"][value="${saved[name]}"]`);
+        const textarea = document.querySelector(`textarea[name="${name}"]`);
+
+        if (radio) radio.checked = true;
+        if (textarea) textarea.value = saved[name];
+      });
+
+      const savedTime = localStorage.getItem("toeflTimeLeft");
+      if (savedTime !== null && !isNaN(savedTime)) {
+        timeLeft = Number(savedTime);
+      }
+      updateTimerDisplay();
+    }
+
+    function resetTest() {
+      const confirmReset = confirm("Are you sure you want to reset the whole test? All answers will be deleted.");
+      if (!confirmReset) return;
+
+      localStorage.removeItem("toeflAnswers");
+      localStorage.removeItem("toeflTimeLeft");
+
+      document.querySelectorAll("input[type='radio']").forEach(input => input.checked = false);
+      document.querySelectorAll("textarea").forEach(textarea => textarea.value = "");
+      document.getElementById("scoreOutput").innerHTML = "";
+
+      timeLeft = TOTAL_TIME;
+      updateTimerDisplay();
+      startTimer();
+
+      const overviewButton = Array.from(document.querySelectorAll(".tab")).find(btn => btn.textContent === "Overview");
+      showSection("overview", overviewButton);
+    }
+
+    document.addEventListener("change", saveAnswers);
+    document.addEventListener("input", saveAnswers);
+
+    window.addEventListener("load", () => {
+      loadAnswers();
+      startTimer();
+    });
+  </script>
+</body>
+</html>
