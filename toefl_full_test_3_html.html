@@ -1,0 +1,539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Full TOEFL Practice Test 3</title>
+  <style>
+    :root {
+      --bg: #f4f6fb;
+      --card: #ffffff;
+      --text: #1f2937;
+      --muted: #6b7280;
+      --border: #d1d5db;
+      --accent: #2563eb;
+      --accent-dark: #1d4ed8;
+      --danger: #dc2626;
+      --success: #16a34a;
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      font-family: Arial, Helvetica, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+    }
+
+    header {
+      background: #111827;
+      color: white;
+      padding: 20px;
+      position: sticky;
+      top: 0;
+      z-index: 10;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+    }
+
+    .header-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+      flex-wrap: wrap;
+    }
+
+    h1 { margin: 0; font-size: 24px; }
+
+    .timer-box {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      font-size: 18px;
+      font-weight: bold;
+    }
+
+    #timer {
+      background: white;
+      color: #111827;
+      padding: 8px 14px;
+      border-radius: 8px;
+      min-width: 95px;
+      text-align: center;
+    }
+
+    nav {
+      background: white;
+      border-bottom: 1px solid var(--border);
+      position: sticky;
+      top: 84px;
+      z-index: 9;
+    }
+
+    .nav-inner {
+      max-width: 1200px;
+      margin: 0 auto;
+      display: flex;
+      gap: 8px;
+      padding: 10px 20px;
+      overflow-x: auto;
+    }
+
+    nav button, .main-button, .secondary-button, .danger-button {
+      border: none;
+      border-radius: 8px;
+      padding: 10px 14px;
+      cursor: pointer;
+      font-weight: bold;
+      transition: 0.2s;
+    }
+
+    nav button {
+      background: #e5e7eb;
+      color: #111827;
+      white-space: nowrap;
+    }
+
+    nav button.active {
+      background: var(--accent);
+      color: white;
+    }
+
+    .main-button { background: var(--accent); color: white; }
+    .main-button:hover { background: var(--accent-dark); }
+    .secondary-button { background: #e5e7eb; color: #111827; }
+    .danger-button { background: var(--danger); color: white; }
+
+    main {
+      max-width: 1200px;
+      margin: 24px auto;
+      padding: 0 20px 60px;
+    }
+
+    .section {
+      display: none;
+      background: var(--card);
+      padding: 28px;
+      border-radius: 14px;
+      box-shadow: 0 8px 24px rgba(15,23,42,0.08);
+      margin-bottom: 24px;
+    }
+
+    .section.active { display: block; }
+
+    h2 {
+      margin-top: 0;
+      color: #111827;
+      border-bottom: 2px solid var(--border);
+      padding-bottom: 10px;
+    }
+
+    h3 { margin-top: 28px; color: #1f2937; }
+
+    .instructions {
+      background: #eff6ff;
+      border-left: 5px solid var(--accent);
+      padding: 14px 18px;
+      border-radius: 8px;
+      margin: 16px 0 24px;
+    }
+
+    .passage, .lecture, .prompt-box {
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      padding: 18px;
+      border-radius: 10px;
+      margin: 16px 0;
+    }
+
+    .question {
+      border-top: 1px solid var(--border);
+      padding: 18px 0;
+    }
+
+    .question:first-of-type { border-top: none; }
+    .question p { font-weight: bold; margin-bottom: 10px; }
+
+    label {
+      display: block;
+      margin: 8px 0;
+      cursor: pointer;
+    }
+
+    textarea, select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 10px;
+      font-size: 15px;
+      font-family: inherit;
+      margin-top: 6px;
+    }
+
+    textarea {
+      min-height: 180px;
+      resize: vertical;
+    }
+
+    audio {
+      width: 100%;
+      margin-top: 8px;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin: 24px 0;
+    }
+
+    .score-card {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+      margin-top: 24px;
+    }
+
+    .score-item {
+      background: #f9fafb;
+      border: 1px solid var(--border);
+      padding: 16px;
+      border-radius: 10px;
+    }
+
+    .score-item strong {
+      font-size: 22px;
+      color: var(--accent);
+    }
+
+    .small-note { color: var(--muted); font-size: 14px; }
+
+    .two-column {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    @media (max-width: 800px) {
+      nav { top: 120px; }
+      .two-column { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div class="header-inner">
+      <h1>Full TOEFL Practice Test 3</h1>
+      <div class="timer-box">
+        <span>Time Left:</span>
+        <span id="timer">120:00</span>
+      </div>
+    </div>
+  </header>
+
+  <nav>
+    <div class="nav-inner">
+      <button class="tab active" onclick="showSection('overview', this)">Overview</button>
+      <button class="tab" onclick="showSection('reading', this)">Reading</button>
+      <button class="tab" onclick="showSection('listening', this)">Listening</button>
+      <button class="tab" onclick="showSection('speaking', this)">Speaking</button>
+      <button class="tab" onclick="showSection('writing', this)">Writing</button>
+      <button class="tab" onclick="showSection('results', this)">Results</button>
+    </div>
+  </nav>
+
+  <main>
+    <section id="overview" class="section active">
+      <h2>Test Overview</h2>
+      <div class="instructions">
+        This is a third complete TOEFL-style practice test. It includes new Reading, Listening, Speaking, and Writing tasks. The timer starts automatically, and the reset button clears all saved answers.
+      </div>
+
+      <p><strong>Reading:</strong> 2 academic passages with multiple-choice questions.</p>
+      <p><strong>Listening:</strong> 2 listening tasks with audio placeholders and transcripts.</p>
+      <p><strong>Speaking:</strong> 4 TOEFL-style speaking tasks.</p>
+      <p><strong>Writing:</strong> 2 TOEFL-style writing tasks.</p>
+
+      <div class="controls">
+        <button class="main-button" onclick="goToReading()">Start Test</button>
+        <button class="danger-button" onclick="resetTest()">Reset Test</button>
+      </div>
+
+      <p class="small-note">Reading and Listening are scored automatically. Speaking and Writing require teacher, peer, or AI evaluation.</p>
+    </section>
+
+    <section id="reading" class="section">
+      <h2>Reading Section</h2>
+      <div class="instructions">Read each passage and choose the best answer.</div>
+
+      <h3>Passage 1: The Growth of Public Libraries</h3>
+      <div class="passage">
+        <p>Public libraries have changed greatly since they first became common in many cities. In the past, libraries were mainly places where people borrowed books or read quietly. Today, however, many libraries offer a much wider range of services. They provide internet access, language classes, study rooms, community events, and support for people looking for jobs.</p>
+        <p>One reason libraries have expanded their role is that access to information has become essential in modern society. Although many people own smartphones or computers, not everyone has reliable internet access at home. Libraries help reduce this gap by offering free technology and assistance. Librarians often teach visitors how to search for information, complete online forms, or use digital tools.</p>
+        <p>Libraries also serve as important community spaces. In large cities, people from different backgrounds may have few opportunities to meet in a shared public environment. Library events, such as book clubs, lectures, and workshops, can bring residents together. For children, libraries often provide reading programs that encourage literacy from an early age.</p>
+        <p>Despite their benefits, libraries face challenges. Funding may be limited, and some people question whether libraries are still necessary in the digital age. Supporters argue that libraries remain valuable precisely because they offer equal access to information, technology, and public space. Rather than disappearing, libraries are adapting to meet new social needs.</p>
+      </div>
+
+      <div class="question"><p>1. What is the main idea of the passage?</p><label><input type="radio" name="r1" value="A"> Libraries are useful only for borrowing books.</label><label><input type="radio" name="r1" value="B"> Libraries have adapted to provide many modern services.</label><label><input type="radio" name="r1" value="C"> Libraries are disappearing because of the internet.</label><label><input type="radio" name="r1" value="D"> Libraries should stop holding community events.</label></div>
+      <div class="question"><p>2. According to the passage, why do libraries provide internet access?</p><label><input type="radio" name="r2" value="A"> To replace all books with computers.</label><label><input type="radio" name="r2" value="B"> To help people who lack reliable access at home.</label><label><input type="radio" name="r2" value="C"> To prevent people from attending classes.</label><label><input type="radio" name="r2" value="D"> To limit public use of information.</label></div>
+      <div class="question"><p>3. The word “gap” in paragraph 2 is closest in meaning to...</p><label><input type="radio" name="r3" value="A"> difference.</label><label><input type="radio" name="r3" value="B"> machine.</label><label><input type="radio" name="r3" value="C"> rule.</label><label><input type="radio" name="r3" value="D"> mistake.</label></div>
+      <div class="question"><p>4. What challenge for libraries is mentioned?</p><label><input type="radio" name="r4" value="A"> Too many people own library cards.</label><label><input type="radio" name="r4" value="B"> Funding may be limited.</label><label><input type="radio" name="r4" value="C"> Children read too many books.</label><label><input type="radio" name="r4" value="D"> Libraries have no public value.</label></div>
+
+      <h3>Passage 2: Migration in Birds</h3>
+      <div class="passage">
+        <p>Every year, many bird species travel long distances between breeding and feeding areas. This seasonal movement, known as migration, allows birds to take advantage of changing food supplies and favorable weather conditions. Some birds travel only a few hundred kilometers, while others cross continents and oceans.</p>
+        <p>Migration requires remarkable physical ability. Birds must store enough energy before beginning their journeys, often by eating more than usual. During migration, they may fly for many hours without stopping. Some species travel at night, when the air is cooler and there are fewer predators. Others use daytime winds to save energy.</p>
+        <p>Scientists have long been interested in how birds navigate. Research suggests that birds may use several types of information, including the position of the sun and stars, landmarks, smells, and Earth’s magnetic field. Young birds of some species appear to follow inherited directions, while others learn routes by traveling with older birds.</p>
+        <p>Migration can be dangerous. Storms, habitat loss, artificial lights, and tall buildings can all create risks. Conservationists therefore work to protect wetlands, forests, and coastal areas that birds use as resting and feeding sites. Without these stopover locations, many migrating birds would not complete their journeys successfully.</p>
+      </div>
+
+      <div class="question"><p>5. Why do birds migrate?</p><label><input type="radio" name="r5" value="A"> To avoid all contact with other birds.</label><label><input type="radio" name="r5" value="B"> To find better food supplies and weather conditions.</label><label><input type="radio" name="r5" value="C"> To build nests in cities only.</label><label><input type="radio" name="r5" value="D"> To lose energy before winter.</label></div>
+      <div class="question"><p>6. Why do some birds travel at night?</p><label><input type="radio" name="r6" value="A"> The air is cooler and there are fewer predators.</label><label><input type="radio" name="r6" value="B"> There is more sunlight.</label><label><input type="radio" name="r6" value="C"> They cannot see landmarks during the day.</label><label><input type="radio" name="r6" value="D"> They avoid eating before travel.</label></div>
+      <div class="question"><p>7. Which navigation method is mentioned in the passage?</p><label><input type="radio" name="r7" value="A"> Ocean waves only.</label><label><input type="radio" name="r7" value="B"> Earth’s magnetic field.</label><label><input type="radio" name="r7" value="C"> Human road signs.</label><label><input type="radio" name="r7" value="D"> Mountain temperature.</label></div>
+      <div class="question"><p>8. Why are stopover locations important?</p><label><input type="radio" name="r8" value="A"> They provide places for birds to rest and feed.</label><label><input type="radio" name="r8" value="B"> They stop migration permanently.</label><label><input type="radio" name="r8" value="C"> They force birds to travel farther.</label><label><input type="radio" name="r8" value="D"> They remove all dangers from migration.</label></div>
+    </section>
+
+    <section id="listening" class="section">
+      <h2>Listening Section</h2>
+      <div class="instructions">Use the audio players if you add MP3 files, or read the transcripts as backup.</div>
+
+      <h3>Listening 1: Student and Housing Office</h3>
+      <div class="prompt-box">
+        <p><strong>Audio file:</strong> test3-listening1.mp3</p>
+        <audio controls preload="none"><source src="test3-listening1.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
+        <p class="small-note">Place <strong>test3-listening1.mp3</strong> in the same folder as this HTML file.</p>
+      </div>
+      <div class="lecture">
+        <p><strong>Student:</strong> Hello, I’m calling because I applied for campus housing, but I haven’t received my room assignment yet.</p>
+        <p><strong>Officer:</strong> Let me check. What is your student number?</p>
+        <p><strong>Student:</strong> It’s 583204.</p>
+        <p><strong>Officer:</strong> I see your application. It was submitted on time, but one document is missing: the housing preference form.</p>
+        <p><strong>Student:</strong> I thought I uploaded it with the application.</p>
+        <p><strong>Officer:</strong> The system shows the application form but not the preference form. You can still upload it by Friday. After that, we can assign your room next week.</p>
+        <p><strong>Student:</strong> Will submitting it late affect my chances of getting a single room?</p>
+        <p><strong>Officer:</strong> Possibly, because single rooms are limited. But if you upload the form today, we will consider your request.</p>
+      </div>
+      <div class="question"><p>9. Why does the student contact the housing office?</p><label><input type="radio" name="l1" value="A"> To ask about a missing room assignment.</label><label><input type="radio" name="l1" value="B"> To cancel his housing application.</label><label><input type="radio" name="l1" value="C"> To complain about a roommate.</label><label><input type="radio" name="l1" value="D"> To pay a housing bill.</label></div>
+      <div class="question"><p>10. What document is missing?</p><label><input type="radio" name="l2" value="A"> A financial aid letter.</label><label><input type="radio" name="l2" value="B"> A housing preference form.</label><label><input type="radio" name="l2" value="C"> A course schedule.</label><label><input type="radio" name="l2" value="D"> A medical report.</label></div>
+      <div class="question"><p>11. What does the officer say about single rooms?</p><label><input type="radio" name="l3" value="A"> They are no longer available to any student.</label><label><input type="radio" name="l3" value="B"> They are limited, but the request can still be considered.</label><label><input type="radio" name="l3" value="C"> They cost the same as shared rooms.</label><label><input type="radio" name="l3" value="D"> They are assigned only after graduation.</label></div>
+
+      <h3>Listening 2: Geology Lecture</h3>
+      <div class="prompt-box">
+        <p><strong>Audio file:</strong> test3-listening2.mp3</p>
+        <audio controls preload="none"><source src="test3-listening2.mp3" type="audio/mpeg">Your browser does not support the audio element.</audio>
+        <p class="small-note">Place <strong>test3-listening2.mp3</strong> in the same folder as this HTML file.</p>
+      </div>
+      <div class="lecture">
+        <p>Today we will discuss volcanoes and the way they shape Earth’s surface. A volcano forms when molten rock, called magma, rises from beneath the Earth’s crust. When magma reaches the surface, it is called lava. Over time, repeated eruptions can build mountains, islands, and new layers of rock.</p>
+        <p>Not all volcanic eruptions are the same. Some are explosive and send ash, gas, and rock high into the atmosphere. Others are quieter, producing slow-moving lava flows. The style of eruption depends partly on the thickness of the magma and the amount of trapped gas it contains.</p>
+        <p>Volcanoes can be destructive, but they also create benefits. Volcanic ash can make soil very fertile, which is why farming communities sometimes develop near volcanoes. Geothermal energy is another benefit. In volcanic regions, heat from underground can be used to produce electricity or warm buildings.</p>
+        <p>Scientists monitor volcanoes by measuring earthquakes, gas emissions, and changes in the shape of the ground. These signs can suggest that magma is moving underground. Although scientists cannot predict every eruption perfectly, monitoring can help reduce risk by giving people time to prepare.</p>
+      </div>
+      <div class="question"><p>12. What is the lecture mainly about?</p><label><input type="radio" name="l4" value="A"> How volcanoes form, erupt, and affect people.</label><label><input type="radio" name="l4" value="B"> Why all mountains are volcanoes.</label><label><input type="radio" name="l4" value="C"> How oceans create earthquakes.</label><label><input type="radio" name="l4" value="D"> Why farming is impossible near volcanoes.</label></div>
+      <div class="question"><p>13. What is magma called when it reaches the surface?</p><label><input type="radio" name="l5" value="A"> Ash.</label><label><input type="radio" name="l5" value="B"> Lava.</label><label><input type="radio" name="l5" value="C"> Soil.</label><label><input type="radio" name="l5" value="D"> Steam.</label></div>
+      <div class="question"><p>14. What can make volcanic soil useful?</p><label><input type="radio" name="l6" value="A"> Volcanic ash can make it fertile.</label><label><input type="radio" name="l6" value="B"> Lava removes all minerals.</label><label><input type="radio" name="l6" value="C"> Gas prevents plants from growing.</label><label><input type="radio" name="l6" value="D"> Earthquakes flatten all land.</label></div>
+      <div class="question"><p>15. Which sign do scientists monitor near volcanoes?</p><label><input type="radio" name="l7" value="A"> Ocean tides only.</label><label><input type="radio" name="l7" value="B"> Bird migration.</label><label><input type="radio" name="l7" value="C"> Gas emissions.</label><label><input type="radio" name="l7" value="D"> Tree color.</label></div>
+    </section>
+
+    <section id="speaking" class="section">
+      <h2>Speaking Section</h2>
+      <div class="instructions">Prepare and speak aloud. You may type notes or a transcript.</div>
+
+      <div class="prompt-box"><h3>Speaking Task 1: Independent Speaking</h3><p>Some students prefer classes with many discussions, while others prefer classes where the teacher gives lectures. Which type of class do you prefer and why?</p><p class="small-note">Preparation: 15 seconds. Response: 45 seconds.</p><textarea name="s1" placeholder="Type notes or your spoken response here..."></textarea></div>
+
+      <div class="prompt-box"><h3>Speaking Task 2: Campus Announcement</h3><p><strong>Reading:</strong> The university plans to close the small cafeteria in the science building and replace it with vending machines. The administration says this will save money and provide snacks throughout the day.</p><p><strong>Listening Transcript:</strong> A student disagrees. He says the cafeteria is the only place nearby where science students can buy a full meal between classes. He also says vending machines usually offer unhealthy food and do not create a place for students to sit and talk.</p><p><strong>Prompt:</strong> Explain the university’s plan and the student’s opinion about it.</p><p class="small-note">Preparation: 30 seconds. Response: 60 seconds.</p><textarea name="s2" placeholder="Type notes or your spoken response here..."></textarea></div>
+
+      <div class="prompt-box"><h3>Speaking Task 3: Academic Concept</h3><p><strong>Reading:</strong> In biology, adaptation is a characteristic that helps an organism survive or reproduce in its environment.</p><p><strong>Listening Transcript:</strong> A professor gives the example of cactus plants. Cacti have thick stems that store water and spines instead of broad leaves, which helps them survive in dry deserts.</p><p><strong>Prompt:</strong> Explain adaptation using the cactus example from the lecture.</p><p class="small-note">Preparation: 30 seconds. Response: 60 seconds.</p><textarea name="s3" placeholder="Type notes or your spoken response here..."></textarea></div>
+
+      <div class="prompt-box"><h3>Speaking Task 4: Academic Lecture</h3><p><strong>Listening Transcript:</strong> A professor explains two ways companies build customer loyalty. First, they may offer rewards programs, such as points or discounts, to encourage customers to return. Second, they may provide excellent customer service, so customers feel respected and trust the company.</p><p><strong>Prompt:</strong> Explain the two ways companies build customer loyalty.</p><p class="small-note">Preparation: 20 seconds. Response: 60 seconds.</p><textarea name="s4" placeholder="Type notes or your spoken response here..."></textarea></div>
+    </section>
+
+    <section id="writing" class="section">
+      <h2>Writing Section</h2>
+      <div class="instructions">Complete both writing tasks. Your answers are saved locally while the page is open.</div>
+
+      <h3>Writing Task 1: Integrated Writing</h3>
+      <div class="two-column">
+        <div class="prompt-box"><h4>Reading Passage</h4><p>Some researchers argue that zoos should no longer exist. First, they say animals in zoos do not have enough space to behave naturally. Second, they argue that zoos are mainly designed for entertainment rather than education. Third, they claim that protecting animals in their natural habitats is a better use of money.</p></div>
+        <div class="prompt-box"><h4>Listening Transcript</h4><p>The professor challenges these claims. She says modern zoos often create large, naturalistic spaces that support animal health. She also explains that zoos educate visitors about conservation and can inspire people to protect wildlife. Finally, she argues that zoos support habitat protection by funding research and breeding programs for endangered species.</p></div>
+      </div>
+      <p><strong>Prompt:</strong> Summarize the points made in the lecture, explaining how they challenge the points made in the reading passage.</p>
+      <textarea name="w1" placeholder="Write your integrated response here..."></textarea>
+
+      <h3>Writing Task 2: Academic Discussion</h3>
+      <div class="prompt-box">
+        <p><strong>Professor:</strong> This week, we are discussing whether universities should require students to complete internships before graduating. Some people believe internships give students valuable real-world experience, while others think they add extra pressure. What is your opinion?</p>
+        <p><strong>Student A:</strong> I think internships should be required because students can learn practical skills and make professional contacts.</p>
+        <p><strong>Student B:</strong> I disagree. Some students already have jobs or family responsibilities, so a required internship could be stressful and unfair.</p>
+      </div>
+      <p><strong>Prompt:</strong> Write a response to the professor’s question. Express and support your opinion, contributing to the discussion.</p>
+      <textarea name="w2" placeholder="Write your academic discussion response here..."></textarea>
+    </section>
+
+    <section id="results" class="section">
+      <h2>Results</h2>
+      <div class="instructions">Click below to calculate your Reading and Listening score. Speaking and Writing are not automatically scored.</div>
+      <div class="controls"><button class="main-button" onclick="calculateScore()">Calculate Score</button><button class="danger-button" onclick="resetTest()">Reset Test</button></div>
+      <div id="scoreOutput" class="score-card"></div>
+
+      <h3>Speaking Self-Assessment Guide</h3>
+      <p><strong>4:</strong> Clear, organized, fluent, accurate, and fully answers the prompt.</p>
+      <p><strong>3:</strong> Mostly clear and complete, with minor hesitation or errors.</p>
+      <p><strong>2:</strong> Understandable but limited or weakly organized.</p>
+      <p><strong>1:</strong> Very limited and difficult to understand.</p>
+      <p><strong>0:</strong> No relevant response.</p>
+
+      <h3>Writing Self-Assessment Guide</h3>
+      <p><strong>5:</strong> Well organized, fully developed, accurate, and directly answers the task.</p>
+      <p><strong>4:</strong> Good response with minor weaknesses.</p>
+      <p><strong>3:</strong> Adequate response with some unclear language or limited support.</p>
+      <p><strong>2:</strong> Limited development and frequent errors.</p>
+      <p><strong>1:</strong> Very weak response.</p>
+      <p><strong>0:</strong> No relevant response.</p>
+    </section>
+  </main>
+
+  <script>
+    const TOTAL_TIME = 120 * 60;
+    let timeLeft = TOTAL_TIME;
+    let timerInterval;
+
+    const answerKey = {
+      r1: "B", r2: "B", r3: "A", r4: "B",
+      r5: "B", r6: "A", r7: "B", r8: "A",
+      l1: "A", l2: "B", l3: "B",
+      l4: "A", l5: "B", l6: "A", l7: "C"
+    };
+
+    function startTimer() {
+      clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        if (timeLeft <= 0) {
+          clearInterval(timerInterval);
+          document.getElementById("timer").textContent = "00:00";
+          alert("Time is up. Your test has ended.");
+          calculateScore();
+          showSection('results', document.querySelector('button[onclick*="results"]'));
+          return;
+        }
+        timeLeft--;
+        updateTimerDisplay();
+        localStorage.setItem("toeflTest3TimeLeft", timeLeft);
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const minutes = Math.floor(timeLeft / 60);
+      const seconds = timeLeft % 60;
+      document.getElementById("timer").textContent = String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
+      document.getElementById("timer").style.color = timeLeft <= 300 ? "#dc2626" : "#111827";
+    }
+
+    function showSection(sectionId, button) {
+      document.querySelectorAll(".section").forEach(section => section.classList.remove("active"));
+      document.getElementById(sectionId).classList.add("active");
+      document.querySelectorAll(".tab").forEach(tab => tab.classList.remove("active"));
+      if (button) button.classList.add("active");
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+
+    function goToReading() {
+      const readingButton = Array.from(document.querySelectorAll(".tab")).find(btn => btn.textContent === "Reading");
+      showSection("reading", readingButton);
+    }
+
+    function calculateScore() {
+      let readingCorrect = 0;
+      let listeningCorrect = 0;
+      const readingTotal = 8;
+      const listeningTotal = 7;
+
+      Object.keys(answerKey).forEach(name => {
+        const selected = document.querySelector(`input[name="${name}"]:checked`);
+        if (selected && selected.value === answerKey[name]) {
+          if (name.startsWith("r")) readingCorrect++;
+          if (name.startsWith("l")) listeningCorrect++;
+        }
+      });
+
+      const objectiveCorrect = readingCorrect + listeningCorrect;
+      const objectiveTotal = readingTotal + listeningTotal;
+      const percentage = Math.round((objectiveCorrect / objectiveTotal) * 100);
+      const estimatedReading = Math.round((readingCorrect / readingTotal) * 30);
+      const estimatedListening = Math.round((listeningCorrect / listeningTotal) * 30);
+      const speakingWords = getWordCount(["s1", "s2", "s3", "s4"]);
+      const writingWords = getWordCount(["w1", "w2"]);
+
+      document.getElementById("scoreOutput").innerHTML = `
+        <div class="score-item"><p>Reading Correct</p><strong>${readingCorrect}/${readingTotal}</strong><p class="small-note">Estimated TOEFL Reading: ${estimatedReading}/30</p></div>
+        <div class="score-item"><p>Listening Correct</p><strong>${listeningCorrect}/${listeningTotal}</strong><p class="small-note">Estimated TOEFL Listening: ${estimatedListening}/30</p></div>
+        <div class="score-item"><p>Objective Score</p><strong>${objectiveCorrect}/${objectiveTotal}</strong><p class="small-note">${percentage}% correct</p></div>
+        <div class="score-item"><p>Speaking Response Words</p><strong>${speakingWords}</strong><p class="small-note">Speaking needs human or AI evaluation.</p></div>
+        <div class="score-item"><p>Writing Response Words</p><strong>${writingWords}</strong><p class="small-note">Writing needs human or AI evaluation.</p></div>
+      `;
+    }
+
+    function getWordCount(names) {
+      let total = 0;
+      names.forEach(name => {
+        const field = document.querySelector(`[name="${name}"]`);
+        if (field && field.value.trim()) total += field.value.trim().split(/\s+/).length;
+      });
+      return total;
+    }
+
+    function saveAnswers() {
+      const data = {};
+      document.querySelectorAll("input[type='radio']").forEach(input => {
+        if (input.checked) data[input.name] = input.value;
+      });
+      document.querySelectorAll("textarea").forEach(textarea => data[textarea.name] = textarea.value);
+      localStorage.setItem("toeflTest3Answers", JSON.stringify(data));
+    }
+
+    function loadAnswers() {
+      const saved = JSON.parse(localStorage.getItem("toeflTest3Answers") || "{}");
+      Object.keys(saved).forEach(name => {
+        const radio = document.querySelector(`input[name="${name}"][value="${saved[name]}"]`);
+        const textarea = document.querySelector(`textarea[name="${name}"]`);
+        if (radio) radio.checked = true;
+        if (textarea) textarea.value = saved[name];
+      });
+
+      const savedTime = localStorage.getItem("toeflTest3TimeLeft");
+      if (savedTime !== null && !isNaN(savedTime)) timeLeft = Number(savedTime);
+      updateTimerDisplay();
+    }
+
+    function resetTest() {
+      const confirmReset = confirm("Are you sure you want to reset the whole test? All answers will be deleted.");
+      if (!confirmReset) return;
+
+      localStorage.removeItem("toeflTest3Answers");
+      localStorage.removeItem("toeflTest3TimeLeft");
+      document.querySelectorAll("input[type='radio']").forEach(input => input.checked = false);
+      document.querySelectorAll("textarea").forEach(textarea => textarea.value = "");
+      document.getElementById("scoreOutput").innerHTML = "";
+
+      timeLeft = TOTAL_TIME;
+      updateTimerDisplay();
+      startTimer();
+
+      const overviewButton = Array.from(document.querySelectorAll(".tab")).find(btn => btn.textContent === "Overview");
+      showSection("overview", overviewButton);
+    }
+
+    document.addEventListener("change", saveAnswers);
+    document.addEventListener("input", saveAnswers);
+
+    window.addEventListener("load", () => {
+      loadAnswers();
+      startTimer();
+    });
+  </script>
+</body>
+</html>
